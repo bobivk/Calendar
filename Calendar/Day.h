@@ -1,8 +1,8 @@
 #pragma once
 #include"Appointment.h"
-#include"Date.h"
 
-class Day: Date
+
+class Day
 {
 	Appointment* appointments;		//appointments sorted by their timeIntervals;
 	size_t appointmentCount{ 0 };
@@ -10,6 +10,8 @@ class Day: Date
 
 public:
 	Day();
-	bool isTimeIntervalTaken(TimeInterval t);
+	bool isTimeIntervalTaken(TimeInterval t) const;
+	void addAppointment(const Appointment&);
+	void printAppointments() const;
 };
 

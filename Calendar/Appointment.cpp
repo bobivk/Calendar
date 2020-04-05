@@ -1,5 +1,7 @@
 #pragma once
 #include"Appointment.h"
+#include<iostream>
+
 
 unsigned strlength(const char* string) {
 	size_t i = 0;
@@ -18,7 +20,7 @@ void strcopy(char* destination, const char* source) {
 
 Appointment::Appointment() :
 	name{ new char[200] },
-	comment{ new char[200] }  {}
+	comment{ new char[2000] }  {}
 
 Appointment::Appointment(const char* in_name, const char* in_comment, TimeInterval t):
 	name{ new char[200] },
@@ -39,10 +41,28 @@ Appointment::Appointment(const Appointment& other):
 	strcopy(name, other.name);
 	strcopy(comment, other.comment);
 }
+Appointment& Appointment::operator=(const Appointment& other) {
+	Appointment temp{ other };
+	this->swap(temp);
+	return *this;
+}
+void Appointment::swap(Appointment& other) {
+	std::swap(name, other.name);
+	std::swap(comment, other.comment);
+	timeInterval.swap(other.timeInterval);
+}
 
 unsigned Appointment::getStart() const {
 	return timeInterval.getStart();
 }
 unsigned Appointment::getEnd() const {
 	return timeInterval.getEnd();
+}
+TimeInterval Appointment::getTimeInterval() const {
+	return timeInterval;
+}
+
+void Appointment::print() const {
+	timeInterval.print();
+	std::cout << name << " - " << comment << '\n';
 }

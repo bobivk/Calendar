@@ -1,5 +1,8 @@
-﻿  Calendar.cpp
-G:\Bobby\C++\OOP\Calendar\Calendar\Calendar.cpp(7,22): error C2600: 'Calendar::~Calendar': cannot define a compiler-generated special member function (must be declared in the class first)
+﻿  Appointment.cpp
+G:\Bobby\C++\OOP\Calendar\Calendar\Appointment.cpp(11,10): warning C4267: 'return': conversion from 'size_t' to 'unsigned int', possible loss of data
+  Calendar.cpp
   Day.cpp
   Main.cpp
+  TimeInterval.cpp
   Generating Code...
+  Calendar.vcxproj -> G:\Bobby\C++\OOP\Calendar\x64\Debug\Calendar.exe

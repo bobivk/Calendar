@@ -7,7 +7,7 @@ Day::Day() :
 	isHoliday {false}
 {}
 
-bool Day::isTimeIntervalTaken(TimeInterval t) {
+bool Day::isTimeIntervalTaken(TimeInterval t) const{
 	for (size_t i = 0; i < appointmentCount; ++i) {
 		unsigned currentStart = appointments[i].getStart();
 		unsigned currentEnd = appointments[i].getEnd();
@@ -17,4 +17,14 @@ bool Day::isTimeIntervalTaken(TimeInterval t) {
 		}
 	}
 	return false;
+}
+
+void Day::addAppointment(const Appointment& appointment) {
+	++appointmentCount;
+	appointments[appointmentCount] = appointment;
+}
+void Day::printAppointments() const{
+	for (size_t i = 0; i < appointmentCount; ++i) {
+		appointments[i].print();
+	}
 }

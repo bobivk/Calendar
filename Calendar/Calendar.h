@@ -2,14 +2,16 @@
 #include"Day.h"
 class Calendar
 {
-	Date beginDate;
-	Date endDate;
-	Date currentDate;
+	Day beginDay;
+	Day endDay;
+	Day currentDay;
+	unsigned chosenDayIndex;
 	Day* days;
 
 public:
 	Calendar();
-	Date getCurrentDate();
+	~Calendar();
+	Day getCurrentDay() const;
 	void addAppointment(const Appointment& appointment);
 };
 
