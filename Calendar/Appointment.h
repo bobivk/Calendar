@@ -1,22 +1,25 @@
 #pragma once
 #include"TimeInterval.h"
+#include<string>
+using namespace std;
 
 class Appointment
 {
-	char* name;
-	char* comment;
+private:
+	string name;
+	string comment;
 	TimeInterval timeInterval;
+	void swap(Appointment& other);
 
 public:
-	Appointment();
-	Appointment(const char* name, const char* comment, TimeInterval t);
+	Appointment() = default;
+	Appointment(const string name, const string comment, TimeInterval t);
 	Appointment(const Appointment& other);
 	Appointment& operator=(const Appointment& other);
-	void swap(Appointment& other);
+	void swap(Appointment&, Appointment&);
 	unsigned getStart() const;
 	unsigned getEnd() const;
 	void print() const;
 	TimeInterval getTimeInterval() const;
-	~Appointment();
 };
 

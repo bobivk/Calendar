@@ -9,7 +9,7 @@ struct Pair {
 };
 
 
-class TimeInterval
+struct TimeInterval
 {
 	unsigned start{ 0 }; //time in minutes from 00:00
 	unsigned end{ 0 };
@@ -18,14 +18,11 @@ class TimeInterval
 	unsigned hoursToMinutes(unsigned hours, unsigned minutes) const;
 	Pair<unsigned, unsigned> minutesToHours(unsigned minutes) const;
 
-
-public:
 	TimeInterval() = default;
 	TimeInterval(unsigned begin, unsigned end);
 	TimeInterval(const TimeInterval& other);
 	TimeInterval& operator=(const TimeInterval&);
+	bool operator==(const TimeInterval&) const;
 	void swap(TimeInterval& other);
-	unsigned getStart() const;
-	unsigned getEnd() const;
 	void print() const;
 };

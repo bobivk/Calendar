@@ -1,17 +1,19 @@
 #pragma once
 #include"Appointment.h"
-
+#include"Date.h"
+#include<vector>
 
 class Day
 {
-	Appointment* appointments;		//appointments sorted by their timeIntervals;
-	size_t appointmentCount{ 0 };
+	Date date;
+	vector<Appointment> appointments;		//appointments sorted by their timeIntervals;
 	bool isHoliday{ false };
-
+	void sortAppointments();
 public:
-	Day();
-	bool isTimeIntervalTaken(TimeInterval t) const;
+	Day(unsigned day, unsigned month, unsigned year);
+	bool isTimeIntervalFree(TimeInterval t) const;
 	void addAppointment(const Appointment&);
+	void removeAppointment(TimeInterval t);
 	void printAppointments() const;
+	Date getDate();
 };
-

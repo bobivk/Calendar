@@ -1,8 +1,2 @@
-﻿  Appointment.cpp
-G:\Bobby\C++\OOP\Calendar\Calendar\Appointment.cpp(11,10): warning C4267: 'return': conversion from 'size_t' to 'unsigned int', possible loss of data
-  Calendar.cpp
-  Day.cpp
-  Main.cpp
-  TimeInterval.cpp
-  Generating Code...
+﻿  Day.cpp
   Calendar.vcxproj -> G:\Bobby\C++\OOP\Calendar\x64\Debug\Calendar.exe

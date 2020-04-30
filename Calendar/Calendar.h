@@ -1,17 +1,16 @@
 #pragma once
 #include"Day.h"
+#include"Parser.h"
+#include<vector>
+
 class Calendar
 {
-	Day beginDay;
-	Day endDay;
-	Day currentDay;
-	unsigned chosenDayIndex;
-	Day* days;
+	vector<Day> days;
 
 public:
 	Calendar();
-	~Calendar();
-	Day getCurrentDay() const;
-	void addAppointment(const Appointment& appointment);
+	Day* searchDay(Date date);
+	void book();
+	void unbook();
 };
 

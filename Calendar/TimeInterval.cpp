@@ -13,6 +13,9 @@ TimeInterval& TimeInterval::operator=(const TimeInterval& other) {
 	end = other.end;
 	return *this;
 }
+bool TimeInterval::operator==(const TimeInterval& other) const{
+	return (start == other.start) && (end == other.end);
+}
 
 unsigned TimeInterval::hoursToMinutes(unsigned hours, unsigned minutes) const {
 	assert(hours >= 0 && hours < 24);
@@ -32,15 +35,10 @@ void TimeInterval::swap(TimeInterval& other) {
 	std::swap(start, other.start);
 	std::swap(end, other.end);
 }
-unsigned TimeInterval::getStart() const{
-	return start;
-}
-unsigned TimeInterval::getEnd() const{
-	return end;
-}
+
 void TimeInterval::print() const {
 	Pair<unsigned, unsigned> startTime = this->minutesToHours(start);
 	Pair<unsigned, unsigned> endTime = this->minutesToHours(end);
 	std::cout << startTime.first << ":" << startTime.second << " - " <<
-		endTime.first << " - " << endTime.second;
+		endTime.first << ":" << endTime.second;
 }

@@ -1,49 +1,23 @@
 #pragma once
 #include"Appointment.h"
 #include<iostream>
+using namespace std;
 
 
-unsigned strlength(const char* string) {
-	size_t i = 0;
-	while (string[i]!=0) {
-		++i;
-	}
-	return i;
-}
-void strcopy(char* destination, const char* source) {
-	size_t length = strlength(source);
-	for (size_t i = 0; i < length; ++i) {
-		destination[i] = source[i];
-	}
-}
 
-
-Appointment::Appointment() :
-	name{ new char[200] },
-	comment{ new char[2000] }  {}
-
-Appointment::Appointment(const char* in_name, const char* in_comment, TimeInterval t):
-	name{ new char[200] },
-	comment{ new char[200] },
-	timeInterval{ t } {
-	strcopy(name, in_name);
-	strcopy(comment, in_comment);
-}
-Appointment::~Appointment() {
-	delete[] name;
-	delete[] comment;
-}
+Appointment::Appointment(const string in_name, const string in_comment, TimeInterval t):
+	name{ in_name },
+	comment{ in_comment },
+	timeInterval{ t } {}
 
 Appointment::Appointment(const Appointment& other):
-	name{ new char[200] },
-	comment{ new char[200] },
-	timeInterval{ other.timeInterval }{
-	strcopy(name, other.name);
-	strcopy(comment, other.comment);
-}
+	name{ other.name},
+	comment{other.comment },
+	timeInterval{ other.timeInterval }{}
+
 Appointment& Appointment::operator=(const Appointment& other) {
 	Appointment temp{ other };
-	this->swap(temp);
+	swap(temp);
 	return *this;
 }
 void Appointment::swap(Appointment& other) {
@@ -51,12 +25,15 @@ void Appointment::swap(Appointment& other) {
 	std::swap(comment, other.comment);
 	timeInterval.swap(other.timeInterval);
 }
+void Appointment::swap(Appointment& lhs, Appointment& rhs) {
+	lhs.swap(rhs);
+}
 
 unsigned Appointment::getStart() const {
-	return timeInterval.getStart();
+	return timeInterval.start;
 }
 unsigned Appointment::getEnd() const {
-	return timeInterval.getEnd();
+	return timeInterval.end;
 }
 TimeInterval Appointment::getTimeInterval() const {
 	return timeInterval;
@@ -64,5 +41,5 @@ TimeInterval Appointment::getTimeInterval() const {
 
 void Appointment::print() const {
 	timeInterval.print();
-	std::cout << name << " - " << comment << '\n';
+	std::cout <<" : " << name << ", Comment: " << comment << '\n';
 }
