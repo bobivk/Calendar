@@ -12,5 +12,6 @@ public:
 	Day* searchDay(Date date);
 	void book();
 	void unbook();
+	void find();
 };
 

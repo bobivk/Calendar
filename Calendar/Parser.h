@@ -6,7 +6,7 @@ using namespace std;
 
 struct Parser
 {
-	static Date parseDate(string dateString);
-	static TimeInterval parseTimeInterval(string startTimeString, string endTimeString);
+	static Date parseDate();
+	static TimeInterval parseTimeInterval();
 };
 

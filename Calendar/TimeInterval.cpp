@@ -3,7 +3,9 @@
 
 TimeInterval::TimeInterval(unsigned in_start, unsigned in_end):
 	start{ in_start },
-	end{ in_end } {}
+	end{ in_end } {
+	assert(in_start < in_end);
+}
 TimeInterval::TimeInterval(const TimeInterval& other):
 	start{other.start},
 	end{ other.end }

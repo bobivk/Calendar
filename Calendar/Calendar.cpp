@@ -1,7 +1,7 @@
 #include "Calendar.h"
 
 Calendar::Calendar() {
-	for (unsigned year = 2000; year <= 2222; ++year) {
+	for (unsigned year = 1900; year <= 2222; ++year) {
 		bool peakYear = false;
 		if (year % 4 == 0) peakYear = true;
 		for (unsigned month = 1; month <= 12; ++month) {
@@ -19,11 +19,11 @@ Calendar::Calendar() {
 }
 
 void Calendar::book() {
-	string name, comment, dateString, startTimeString, endTimeString;
-	cin >> name >> comment >> dateString >> startTimeString >> endTimeString;
+	string name, comment;
+	cin >> name >> comment;
 
-	Date date = Parser::parseDate(dateString);
-	TimeInterval time = Parser::parseTimeInterval(startTimeString, endTimeString);
+	Date date = Parser::parseDate();
+	TimeInterval time = Parser::parseTimeInterval();
 
 	Appointment appointment(name, comment, time);
 
@@ -36,14 +36,12 @@ void Calendar::book() {
 }
 
 void Calendar::unbook() {
-	string dateString, startTimeString, endTimeString;
-	cin >> dateString >> startTimeString, endTimeString;
-	Date date = Parser::parseDate(dateString);
-	TimeInterval time = Parser::parseTimeInterval(startTimeString, endTimeString);
+	Date date = Parser::parseDate();
+	TimeInterval time = Parser::parseTimeInterval();
 
 	Day* chosenDay = searchDay(date);
 	if (chosenDay != nullptr) {
-	//	chosenDay->removeAppointment(time);
+		chosenDay->removeAppointment(time);
 	}
 }
 Day* Calendar::searchDay(Date date) {
@@ -54,4 +52,12 @@ Day* Calendar::searchDay(Date date) {
 	}
 	cout << "Day not found in calendar with this date.\n";
 	return nullptr;
+}
+
+void Calendar::find() {
+	string nameOrComment;
+	cin >> nameOrComment;
+	for (size_t i = 0; i < days.size(); ++i) {
+		days[i].findAppointment(nameOrComment);
+	}
 }

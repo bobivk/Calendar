@@ -1,2 +1,11 @@
-﻿  Day.cpp
+﻿  Appointment.cpp
+  Calendar.cpp
+G:\Bobby\C++\OOP\Calendar\Calendar\Calendar.cpp(13,31): warning C4018: '<=': signed/unsigned mismatch
+  Day.cpp
+G:\Bobby\C++\OOP\Calendar\Calendar\Day.cpp(74,28): warning C4267: 'return': conversion from 'size_t' to 'unsigned int', possible loss of data
+  Main.cpp
+G:\Bobby\C++\OOP\Calendar\Calendar\Main.cpp(2,9): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+  Parser.cpp
+  TimeInterval.cpp
+  Generating Code...
   Calendar.vcxproj -> G:\Bobby\C++\OOP\Calendar\x64\Debug\Calendar.exe

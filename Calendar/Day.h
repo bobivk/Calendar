@@ -14,6 +14,9 @@ public:
 	bool isTimeIntervalFree(TimeInterval t) const;
 	void addAppointment(const Appointment&);
 	void removeAppointment(TimeInterval t);
+	void findAppointment(string nameOrComment);
 	void printAppointments() const;
+	void setAsHoliday();
 	Date getDate();
+	unsigned getAppointmentCount();
 };

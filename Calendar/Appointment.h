@@ -19,6 +19,8 @@ public:
 	void swap(Appointment&, Appointment&);
 	unsigned getStart() const;
 	unsigned getEnd() const;
+	string getName() const;
+	string getComment() const;
 	void print() const;
 	TimeInterval getTimeInterval() const;
 };

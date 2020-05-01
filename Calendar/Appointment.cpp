@@ -35,11 +35,17 @@ unsigned Appointment::getStart() const {
 unsigned Appointment::getEnd() const {
 	return timeInterval.end;
 }
+string Appointment::getName() const {
+	return name;
+}
+string Appointment::getComment() const {
+	return comment;
+}
 TimeInterval Appointment::getTimeInterval() const {
 	return timeInterval;
 }
 
 void Appointment::print() const {
 	timeInterval.print();
-	std::cout <<" : " << name << ", Comment: " << comment << '\n';
+	std::cout <<" : " << name << ", Comment: " << comment << endl;
 }

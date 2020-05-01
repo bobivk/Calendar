@@ -13,3 +13,6 @@ bool Date::operator==(Date& other) const{
 	if (day == other.day && month == other.month && year == other.year) return true;
 	return false;
 }
+void Date::print() const {
+	std::cout << day << '.' << month << '.' << year << ' ';
+}

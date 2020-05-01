@@ -37,21 +37,39 @@ void Day::addAppointment(const Appointment& appointment) {
 	}
 	else cout << "This time interval is already taken.\n";
 }
-bool isTimeIntervalEqual(Appointment& a, Appointment& b) {
-	return a.getTimeInterval() == b.getTimeInterval();
-}
+
+
 void Day::removeAppointment(TimeInterval time) {
-	//std::remove_if(appointments.begin(), appointments.end(), isTimeIntervalEqual);
-
-	cout << "Removed appointment in interval ";
-	time.print();
+	
+	for (size_t i = 0; i < appointments.size(); ++i) {
+		if (appointments[i].getTimeInterval() == time) {
+			appointments.erase(appointments.begin() + i);
+			cout << "Removed appointment in interval ";
+			time.print();
+			return;
+		}
+	}
+	cout << "Could not find appointment.\n";
 }
-
+void Day::findAppointment(string nameOrComment) {
+	for (size_t i = 0; i < appointments.size(); ++i) {
+		if (appointments[i].getName() == nameOrComment
+			|| appointments[i].getComment() == nameOrComment) {
+			appointments[i].print();
+		}
+	}
+}
 void Day::printAppointments() const{
 	for (size_t i = 0; i < appointments.size(); ++i) {
 		appointments[i].print();
 	}
 }
+void Day::setAsHoliday() {
+	isHoliday = true;
+}
 Date Day::getDate() {
 	return date;
+}
+unsigned Day::getAppointmentCount() {
+	return appointments.size();
 }

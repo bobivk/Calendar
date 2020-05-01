@@ -18,7 +18,6 @@ struct TimeInterval
 	unsigned hoursToMinutes(unsigned hours, unsigned minutes) const;
 	Pair<unsigned, unsigned> minutesToHours(unsigned minutes) const;
 
-	TimeInterval() = default;
 	TimeInterval(unsigned begin, unsigned end);
 	TimeInterval(const TimeInterval& other);
 	TimeInterval& operator=(const TimeInterval&);
