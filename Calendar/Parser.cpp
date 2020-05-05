@@ -1,9 +1,9 @@
 #include "Parser.h"
 
 						
-Date Parser::parseDate() {
+Date Parser::parseDate(istream& input) {
 	string dateStr;
-	cin >> dateStr;	//12.04.2020  
+	input >> dateStr;	//12.04.2020  
 	unsigned day = 0;
 	day += (dateStr[0] - '0') * 10;
 	day += (dateStr[1] - '0');
@@ -20,9 +20,9 @@ Date Parser::parseDate() {
 	return Date(day, month, year);
 }
 
-TimeInterval Parser::parseTimeInterval() {
+TimeInterval Parser::parseTimeInterval(istream& input) {
 	string startTimeStr, endTimeStr;
-	cin >> startTimeStr >> endTimeStr;	//12:15, 16:15
+	input >> startTimeStr >> endTimeStr;	//12:15, 16:15
 	unsigned startMinutes = 0;
 	startMinutes += (startTimeStr[0] - '0') * 600;
 	startMinutes += (startTimeStr[1] - '0') * 60;
@@ -35,4 +35,21 @@ TimeInterval Parser::parseTimeInterval() {
 	endMinutes += (endTimeStr[4] - '0');
 	TimeInterval t(startMinutes, endMinutes);
 	return t;
+}
+unsigned Parser::parseTime(istream& input) {
+	string timeStr;
+	input >> timeStr;
+	unsigned result = 0;
+	if (timeStr.length() == 5) { // 04:10
+		result += (timeStr[0] - '0') * 600;
+		result += (timeStr[1] - '0') * 60;
+		result += (timeStr[3] - '0') * 10;
+		result += (timeStr[4] - '0');
+	}
+	if (timeStr.length() == 4) { // 4:10
+		result += (timeStr[0] - '0') * 60;
+		result += (timeStr[2] - '0') * 10;
+		result += (timeStr[3] - '0');
+	}
+	return result;
 }

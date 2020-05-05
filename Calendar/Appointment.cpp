@@ -41,6 +41,9 @@ string Appointment::getName() const {
 string Appointment::getComment() const {
 	return comment;
 }
+unsigned Appointment::getLengthInMinutes() const {
+	return timeInterval.end - timeInterval.start;
+}
 TimeInterval Appointment::getTimeInterval() const {
 	return timeInterval;
 }

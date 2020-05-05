@@ -4,7 +4,7 @@
 TimeInterval::TimeInterval(unsigned in_start, unsigned in_end):
 	start{ in_start },
 	end{ in_end } {
-	assert(in_start < in_end);
+	assert(in_start <= in_end);
 }
 TimeInterval::TimeInterval(const TimeInterval& other):
 	start{other.start},
@@ -41,6 +41,15 @@ void TimeInterval::swap(TimeInterval& other) {
 void TimeInterval::print() const {
 	Pair<unsigned, unsigned> startTime = this->minutesToHours(start);
 	Pair<unsigned, unsigned> endTime = this->minutesToHours(end);
-	std::cout << startTime.first << ":" << startTime.second << " - " <<
-		endTime.first << ":" << endTime.second;
+	if (startTime.second == 0) {
+		std::cout << startTime.first << ":" << startTime.second << "0 - " <<
+			endTime.first << ":" << endTime.second;
+	}		
+	else {
+		std::cout << startTime.first << ":" << startTime.second << " - " <<
+			endTime.first << ":" << endTime.second;
+	}
+	if (endTime.second == 0) {
+		std::cout << '0';
+	}
 }

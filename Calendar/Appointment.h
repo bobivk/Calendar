@@ -21,6 +21,7 @@ public:
 	unsigned getEnd() const;
 	string getName() const;
 	string getComment() const;
+	unsigned getLengthInMinutes() const;
 	void print() const;
 	TimeInterval getTimeInterval() const;
 };

@@ -12,25 +12,56 @@ bool Day::isTimeIntervalFree(TimeInterval t) const{
 	for (size_t i = 0; i < appointments.size(); ++i) {
 		unsigned currentStart = appointments[i].getStart();
 		unsigned currentEnd = appointments[i].getEnd();
-		if ((currentStart >= t.start && currentStart <= t.end) ||
-			(currentEnd >= t.start && currentEnd <= t.end)) {
+		if ((t.start <= currentStart && t.end > currentStart) ||
+			(t.start < currentEnd && t.end > currentEnd) ||
+			(t.start >= currentStart && t.end < currentEnd)) {
 			return false;
 		}
 	}
 	return true;
-}
 
-void Day::sortAppointments() {	//bubble sort
-	for (size_t i = 0; i < appointments.size(); ++i) {
-		for (size_t j = i; j < appointments.size(); ++j) {
-			if (appointments[j].getStart() < appointments[i].getStart()) {
-				swap(appointments[i], appointments[j]);
-			}
+
+
+
+
+
+
+
+
+
+
+
+
+
+		/*
+
+		if ((currentStart >= t.start && currentStart <= t.end) ||
+			(currentEnd >= t.start && currentEnd <= t.end) ||
+			(currentEnd >= t.end && currentStart <= t.start) ||
+			(currentEnd <= t.end && currentStart >= t.start)) {
+			cout << " is Taken ";
+			return false;
 		}
 	}
+	return true;
+	*/
 }
-void Day::addAppointment(const Appointment& appointment) {
-	if (isTimeIntervalFree(appointment.getTimeInterval()))
+unsigned Day::getBusyMinutes() const {
+	unsigned result = 0;
+	for (size_t i = 0; i < appointments.size(); ++i) {
+		result += appointments[i].getLengthInMinutes();
+	}
+	return result;
+}
+
+bool compareAppointments(Appointment a, Appointment b){
+	return a.getStart() < b.getStart();
+}
+void Day::sortAppointments() {
+	std::sort(appointments.begin(), appointments.end(), compareAppointments);
+}
+void Day::addAppointment(const Appointment& appointment) { 
+	if (isTimeIntervalFree(appointment.getTimeInterval())) //iskame li da moje da se pripokrivat?
 	{
 		appointments.push_back(appointment);
 		sortAppointments();
@@ -40,26 +71,53 @@ void Day::addAppointment(const Appointment& appointment) {
 
 
 void Day::removeAppointment(TimeInterval time) {
-	
 	for (size_t i = 0; i < appointments.size(); ++i) {
 		if (appointments[i].getTimeInterval() == time) {
 			appointments.erase(appointments.begin() + i);
 			cout << "Removed appointment in interval ";
 			time.print();
+			cout << endl;
 			return;
 		}
 	}
 	cout << "Could not find appointment.\n";
 }
-void Day::findAppointment(string nameOrComment) {
+void Day::findAndPrintAppointment(string nameOrComment) {
 	for (size_t i = 0; i < appointments.size(); ++i) {
 		if (appointments[i].getName() == nameOrComment
 			|| appointments[i].getComment() == nameOrComment) {
+			date.print();
 			appointments[i].print();
 		}
 	}
 }
+
+TimeInterval Day::findFreeInterval(unsigned lengthInMinutes) {
+	unsigned i = 0;
+	TimeInterval toCheck(480, 480 + lengthInMinutes); //starting from 08:00, which is 480 minutes
+
+	while (i < appointments.size()) {
+		if (isTimeIntervalFree(toCheck)) {
+			return toCheck;
+		}
+		else {
+			toCheck.start = appointments[i].getEnd();
+			toCheck.end = toCheck.start + lengthInMinutes;
+			++i;
+		}
+		if (toCheck.end > 1020) {// if we reach 17:00 (1020 minutes), advance to the next day
+			break;
+		}
+	}
+	if (isTimeIntervalFree(toCheck) && toCheck.end <= 1020) {
+		return toCheck;
+	}
+	return TimeInterval(0, 0);	//return an empty interval
+}
+
 void Day::printAppointments() const{
+	if (isHoliday) cout << "This day is a holiday.\n";
+	if (appointments.size() == 0) cout << "No appointments for this day.\n";
 	for (size_t i = 0; i < appointments.size(); ++i) {
 		appointments[i].print();
 	}
@@ -70,6 +128,6 @@ void Day::setAsHoliday() {
 Date Day::getDate() {
 	return date;
 }
-unsigned Day::getAppointmentCount() {
+size_t Day::getAppointmentCount() {
 	return appointments.size();
 }

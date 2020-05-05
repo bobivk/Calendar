@@ -12,11 +12,13 @@ class Day
 public:
 	Day(unsigned day, unsigned month, unsigned year);
 	bool isTimeIntervalFree(TimeInterval t) const;
+	unsigned getBusyMinutes() const;
 	void addAppointment(const Appointment&);
 	void removeAppointment(TimeInterval t);
-	void findAppointment(string nameOrComment);
+	void findAndPrintAppointment(string nameOrComment);
+	TimeInterval findFreeInterval(unsigned LengthInMinutes);
 	void printAppointments() const;
 	void setAsHoliday();
 	Date getDate();
-	unsigned getAppointmentCount();
+	size_t getAppointmentCount();
 };
