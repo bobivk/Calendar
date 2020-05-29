@@ -4,7 +4,7 @@
 TimeInterval::TimeInterval(unsigned in_start, unsigned in_end):
 	start{ in_start },
 	end{ in_end } {
-	assert(in_start <= in_end);
+	
 }
 TimeInterval::TimeInterval(const TimeInterval& other):
 	start{other.start},
@@ -24,13 +24,13 @@ unsigned TimeInterval::hoursToMinutes(unsigned hours, unsigned minutes) const {
 	assert(minutes >= 0 && minutes < 60);
 	return minutes += hours * 60;
 }
-Pair<unsigned, unsigned> TimeInterval::minutesToHours(unsigned minutes) const{
+TimePair TimeInterval::minutesToHours(unsigned minutes) const{
 	assert(minutes < 1440);
 	unsigned hours = minutes / 60;
 	unsigned min = minutes % 60;
-	Pair<unsigned, unsigned> p;
-	p.first = hours;
-	p.second = min;
+	TimePair p;
+	p.hours = hours;
+	p.minutes = min;
 	return p;
 }
 void TimeInterval::swap(TimeInterval& other) {
@@ -39,17 +39,14 @@ void TimeInterval::swap(TimeInterval& other) {
 }
 
 void TimeInterval::print(std::ostream& out) const {
-	Pair<unsigned, unsigned> startTime = this->minutesToHours(start);
-	Pair<unsigned, unsigned> endTime = this->minutesToHours(end);
-	if (startTime.second == 0) {
-		out << startTime.first << ":" << startTime.second << "0 - " <<
-			endTime.first << ":" << endTime.second;
-	}		
-	else {
-		out << startTime.first << ":" << startTime.second << " - " <<
-			endTime.first << ":" << endTime.second;
-	}
-	if (endTime.second == 0) {
-		out << '0';
-	}
+	TimePair startTime = this->minutesToHours(start);
+	TimePair endTime = this->minutesToHours(end);
+	if (startTime.hours < 10) out << '0';
+	out << startTime.hours << ':';
+	if (startTime.minutes < 10) out << '0';
+	out << startTime.minutes << " - ";
+	if (endTime.hours < 10) out << '0';
+	out << endTime.hours << ':';
+	if (endTime.minutes < 10) out << '0';
+	out << endTime.minutes << " ";
 }

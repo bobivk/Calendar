@@ -14,6 +14,7 @@ Appointment::Appointment(const Appointment& other):
 	name{ other.name},
 	comment{other.comment },
 	timeInterval{ other.timeInterval }{}
+Appointment::~Appointment() {}
 
 Appointment& Appointment::operator=(const Appointment& other) {
 	Appointment temp{ other };
@@ -50,5 +51,5 @@ TimeInterval Appointment::getTimeInterval() const {
 
 void Appointment::print(ostream& out) const {
 	timeInterval.print(out);
-	out <<" : " << name << ", Comment: " << comment << endl;
+	out <<" : " << name << " Comment: " << comment << endl;
 }

@@ -13,7 +13,7 @@ Date::Date(const Date& other):
 	month{ other.month },
 	year{ other.year } {}
 
-bool Date::operator==(Date& other) const{
+bool Date::operator==(const Date& other) const{
 	if (day == other.day && month == other.month && year == other.year) return true;
 	return false;
 }
@@ -73,5 +73,8 @@ void Date::operator--() {
 	
 }
 void Date::print(std::ostream& out) const {
-	out << day << '.' << month << '.' << year << ' ';
+	if (day < 10) out << "0";
+	out << day << '.';
+	if (month < 10) out << "0";
+	out << month << '.' << year << ' ';
 }

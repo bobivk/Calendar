@@ -1,1 +1,11 @@
-.vs
+*.vs
+*.txt
+*.bin
+*.log
+*.tlog
+*.obj
+*.idb
+*.lastbuildstate
+*.exe
+*.lik
+*.pdb

@@ -1,5 +1,6 @@
 #pragma once
 #include"Appointment.h"
+#include"TimeInterval.h"
 #include"Date.h"
 #include<vector>
 
@@ -12,15 +13,17 @@ class Day
 public:
 	Day(unsigned day, unsigned month, unsigned year);
 	Day(Date);
+	~Day();
 	bool isTimeIntervalFree(TimeInterval t) const;
 	unsigned getBusyMinutes() const;
-	void addAppointment(const Appointment&);
+	void addAppointment(Appointment*);
 	void removeAppointment(TimeInterval t);
 	void findAndPrintAppointment(string nameOrComment);
 	TimeInterval findFreeInterval(unsigned LengthInMinutes);
 	void printAppointments(std::ostream& out) const;
+	void print(std::ostream& out) const;
 	void logAppointments() const;
 	void setAsHoliday();
-	Date getDate();
+	Date getDate() const;
 	size_t getAppointmentCount();
 };

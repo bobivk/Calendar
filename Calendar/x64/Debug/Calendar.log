@@ -1,9 +1,2 @@
 ﻿  Appointment.cpp
-  Calendar.cpp
-  Date.cpp
-  Day.cpp
-  Main.cpp
-  Parser.cpp
-  TimeInterval.cpp
-  Generating Code...
-  Calendar.vcxproj -> C:\Users\bobiv\source\repos\Calendar\x64\Debug\Calendar.exe
+  Calendar.vcxproj -> G:\Bobby\C++\OOP\Calendar\x64\Debug\Calendar.exe

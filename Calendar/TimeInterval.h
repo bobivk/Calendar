@@ -1,11 +1,12 @@
 #pragma once
 #include<cassert>
 #include<iostream>
+#include<fstream>
 
-template<typename T, typename V>
-struct Pair {
-	T first;
-	V second;
+
+struct TimePair {
+	unsigned hours;
+	unsigned minutes;
 };
 
 
@@ -16,7 +17,7 @@ struct TimeInterval
 
 	//appointment or timeinterval member function?
 	unsigned hoursToMinutes(unsigned hours, unsigned minutes) const;
-	Pair<unsigned, unsigned> minutesToHours(unsigned minutes) const;
+	TimePair minutesToHours(unsigned minutes) const;
 
 	TimeInterval(unsigned begin, unsigned end);
 	TimeInterval(const TimeInterval& other);

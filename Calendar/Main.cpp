@@ -1,5 +1,4 @@
 #include"Calendar.h"
-#include<iostream>
 #include<string>
 using namespace std;
 
@@ -12,8 +11,10 @@ void help() {
 	cout << "4. holiday <date>\n";
 	cout << "5. find <appointment_name_or_comment>\n";
 	cout << "6. findslot <from_date> <length_in_hours>\n";
-	cout << "7. busydays <from_date> <to_date>\n";
-
+	cout << "7. findslotwith <from_date> <length_in_hours> <calendar_filename>\n";
+	cout << "8. busydays <from_date> <to_date>\n";
+	cout << "9. list\n";
+	cout << "10. merge <calendar_filename>\n";
 	cout << "save\n";
 	cout << "save_as <fileName>\n";
 	cout << "open <fileName>\n";
@@ -27,24 +28,16 @@ int main() {
 	help();
 	Calendar calendar;
 	bool running = true;
-	string fileName = "calendar.bin";
-	//calendar.load(fileName);
-	Appointment appointment("appointment1", "comment1", TimeInterval(480, 540));
+	string fileName = "calendar.txt";
+	calendar.load(fileName);
+
+	
+	Appointment* appointment = new Appointment("appointment1", "comment1", TimeInterval(480, 540));
 	Date date(10, 4, 2020);
-	Day* chosenDay = calendar.searchDay(date);
-	if (chosenDay != nullptr) {
-		chosenDay->addAppointment(appointment);
-		cout << "Booked appointment ";
-		appointment.print();
-	}
-	Appointment appointment2("appointment2", "comment2", TimeInterval(550, 660));
+	calendar.addAppointment(appointment, date);
+	Appointment* appointment2 = new Appointment("appointment2", "comment2", TimeInterval(550, 660));
 	Date date2(10, 4, 2020);
-	Day* chosenDay2 = calendar.searchDay(date2);
-	if (chosenDay2 != nullptr) {
-		chosenDay2->addAppointment(appointment2);
-		cout << "Booked appointment ";
-		appointment2.print();
-	}
+	calendar.addAppointment(appointment2, date2);
 
 	while (running) {
 		cout << "$ ";
@@ -53,46 +46,60 @@ int main() {
 		if (command == "book") {
 			calendar.book();
 		}
-		if (command == "agenda") {
+		else if (command == "agenda") {
 			Date date = Parser::parseDate(cin);
-			calendar.searchDay(date)->printAppointments();
+			calendar.searchDay(date)->logAppointments();
 		}
-		if (command == "unbook") {
+		else if (command == "unbook") {
 			calendar.unbook();
 		}
-		if (command == "holiday") {
+		else if (command == "holiday") {
 			Date date = Parser::parseDate(cin);
 			calendar.searchDay(date)->setAsHoliday();
-			cout << "Day set as holiday.\n";
+			date.print(cout);
+			cout << " set as holiday.\n";
 		}
-		if (command == "find") {
+		else if (command == "find") {
 			calendar.find();
 		}
-		if (command == "findslot") {
+		else if (command == "findslot") {
 			calendar.findSlot();
 		}
-		if (command == "busydays") {
+		else if (command == "findslotwith") {
+			
+		}
+		else if (command == "busydays") {
 			calendar.busyDays();
 		}
-		if (command == "save") {
+		else if (command == "list") {
+			calendar.list();
+		}
+		else if (command == "merge") {
+			string mergingFileName;
+			cin >> mergingFileName;
+			calendar.mergeWith(mergingFileName);
+		}
+		else if (command == "save") {
 			calendar.save(fileName);
 			cout << "Saved file " << fileName << endl;
 		}
-		if (command == "save_as") {
+		else if (command == "save_as") {
 			cin >> fileName;
 			calendar.save(fileName);
 			cout << "Saved file " << fileName << endl;
 		}
-		if (command == "open") {
+		else if (command == "open") {
 			cin >> fileName;
 			calendar.load(fileName);
 			cout << "Loaded data from " << fileName << endl;
 		}
-		if (command == "help") help();
-		if (command == "exit") {
+		else if (command == "help") help();
+		else if (command == "exit") {
 			calendar.save(fileName);
 			running = false;
 		}
+		else cout << "Invalid command.\n";
 	}
 	return 0;
 }
+

@@ -1,6 +1,8 @@
 #include "Calendar.h"
+using namespace std;
 
-Calendar::Calendar(std::string filename) {
+Calendar::Calendar() {
+
 	/*
 	for (unsigned year = 1900; year <= 2222; ++year) {
 		bool peakYear = false;
@@ -18,7 +20,11 @@ Calendar::Calendar(std::string filename) {
 		}
 	}
 	*/
-	load(filename);
+	load("calendar.txt");
+}
+
+Calendar::~Calendar() {
+	save("calendar.txt");
 }
 
 void Calendar::book() {
@@ -26,38 +32,37 @@ void Calendar::book() {
 	cin >> name >> comment;
 	Date date = Parser::parseDate(cin);
 	TimeInterval time = Parser::parseTimeInterval(cin);
-	Appointment appointment(name, comment, time);
-
-	Day* chosenDay = searchDay(date);
-	if (chosenDay != nullptr) {
-		chosenDay->addAppointment(appointment);
-	}
-	else {
-		Day newDay(date);
-		newDay.addAppointment(appointment);
-		days.push_back(newDay);
-	}
+	Appointment* newAppointment = new Appointment(name, comment, time);
+	addAppointment(newAppointment, date);
+}
+void Calendar::addAppointment(Appointment* newAppointment, Date date) {
+	vector<Day>::iterator foundDay = searchDay(date);
+	foundDay->addAppointment(newAppointment);
 	cout << "Booked appointment ";
-	appointment.print(cout);
+	date.print(cout);
+	newAppointment->print(cout);
 }
 
 void Calendar::unbook() {
 	Date date = Parser::parseDate(cin);
 	TimeInterval time = Parser::parseTimeInterval(cin);
 
-	Day* chosenDay = searchDay(date);
-	if (chosenDay != nullptr) {
+	vector<Day>::iterator chosenDay = searchDay(date);
+	if (chosenDay != days.end()) {
 		chosenDay->removeAppointment(time);
 	}
 }
-Day* Calendar::searchDay(Date date) {
-	for (size_t i = 0; i < days.size(); ++i) {
-		if (days[i].getDate() == date) {
-			return &days[i];
-		}
+std::vector<Day>::iterator Calendar::searchDay(Date date) {
+
+	vector<Day>::iterator it = std::find_if(days.begin(), days.end(),
+		[date](Day& day) -> bool {
+			return day.getDate() == date;
+		});
+	if(it == days.end()){	//if day is not found, then it's empty so create it
+		days.emplace_back(Day(date));
+		return days.end() - 1;
 	}
-	cout << "Day not found in calendar with this date.\n";
-	return nullptr;
+	return it;
 }
 
 void Calendar::find() {
@@ -73,8 +78,7 @@ void Calendar::findSlot() {
 	TimeInterval empty(0, 0);
 	TimeInterval freeIntervalFound = empty;
 	while(freeIntervalFound == empty){
-		Day* nextDay = searchDay(fromDate);
-		freeIntervalFound = nextDay->findFreeInterval(minutesOfSearched);
+		freeIntervalFound = searchDay(fromDate)->findFreeInterval(minutesOfSearched);
 		++fromDate;
 	}
 	--fromDate;
@@ -84,36 +88,45 @@ void Calendar::findSlot() {
 	cout << endl;
 }
 
-bool compareDaysByBusiness(Day* d1, Day* d2) {
-	return d1->getBusyMinutes() > d2->getBusyMinutes();
+bool compareDaysByBusiness(Day d1, Day d2) {
+	return d1.getBusyMinutes() > d2.getBusyMinutes();
 }
-void sortDaysByBusiness(vector<Day*> &days) {
+void sortDaysByBusiness(vector<Day> &days) {
 	std::sort(days.begin(), days.end(), compareDaysByBusiness);
 }
 void Calendar::busyDays() {
 	Date from = Parser::parseDate(cin);
 	Date to = Parser::parseDate(cin);
 	++to;
-	vector<Day*> days;
+	vector<Day> days;
 	while (!(from == to)) {
-		Day* current = searchDay(from);
-		days.push_back(current);
+		days.push_back(*searchDay(from));
 		++from;
 	}
 	sortDaysByBusiness(days);
 	for (size_t i = 0; i < days.size(); ++i) {
-		days[i]->getDate().print(cout);
-		cout << endl;
-		days[i]->logAppointments();
+		days[i].print(cout);
 	}
 }
 
 void Calendar::load(string fileName) {
-	ifstream in(fileName, ios::binary);
-	in.read((char*)this, sizeof(Calendar));
-	in.close();
+	ifstream in(fileName, ios::beg);
+
+
 }
 void Calendar::save(string fileName) {
-	
-	cout << "No file specified.";
+	ofstream out(fileName, ios::trunc);
+	for (size_t days_count = 0; days_count < days.size(); ++days_count) {
+		days[days_count].print(out);
+	}
+}
+void Calendar::list() {
+	for (size_t i = 0; i < days.size(); ++i) {
+		days[i].print(cout);
+	}
+}
+
+void Calendar::mergeWith(string fileName) {
+	ifstream in(fileName, ios::beg);
+
 }

@@ -8,6 +8,7 @@ Day::Day(unsigned day, unsigned month, unsigned year) :
 	date(day, month, year) 
 {}
 Day::Day(Date date_) : date{ date_ } {}
+Day::~Day() {}
 
 bool Day::isTimeIntervalFree(TimeInterval t) const{
 	for (size_t i = 0; i < appointments.size(); ++i) {
@@ -20,32 +21,6 @@ bool Day::isTimeIntervalFree(TimeInterval t) const{
 		}
 	}
 	return true;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-		/*
-
-		if ((currentStart >= t.start && currentStart <= t.end) ||
-			(currentEnd >= t.start && currentEnd <= t.end) ||
-			(currentEnd >= t.end && currentStart <= t.start) ||
-			(currentEnd <= t.end && currentStart >= t.start)) {
-			cout << " is Taken ";
-			return false;
-		}
-	}
-	return true;
-	*/
 }
 unsigned Day::getBusyMinutes() const {
 	unsigned result = 0;
@@ -61,13 +36,13 @@ bool compareAppointments(Appointment a, Appointment b){
 void Day::sortAppointments() {
 	std::sort(appointments.begin(), appointments.end(), compareAppointments);
 }
-void Day::addAppointment(const Appointment& appointment) { 
-	if (isTimeIntervalFree(appointment.getTimeInterval())) //iskame li da moje da se pripokrivat?
+void Day::addAppointment(Appointment* appointment) { 
+	if (!isTimeIntervalFree(appointment->getTimeInterval())) //iskame li da moje da se pripokrivat?
 	{
-		appointments.push_back(appointment);
-		sortAppointments();
+		cout << "This time interval is already taken.\n";
 	}
-	else cout << "This time interval is already taken.\n";
+	appointments.push_back(*appointment);
+	sortAppointments();
 }
 
 
@@ -98,6 +73,9 @@ TimeInterval Day::findFreeInterval(unsigned lengthInMinutes) {
 	TimeInterval toCheck(480, 480 + lengthInMinutes); //starting from 08:00, which is 480 minutes
 
 	while (i < appointments.size()) {
+		if (toCheck.end > 1020 || isHoliday) {// if we reach 17:00 (1020 minutes), advance to the next day
+			return TimeInterval(0, 0);
+		}
 		if (isTimeIntervalFree(toCheck)) {
 			return toCheck;
 		}
@@ -106,9 +84,6 @@ TimeInterval Day::findFreeInterval(unsigned lengthInMinutes) {
 			toCheck.end = toCheck.start + lengthInMinutes;
 			++i;
 		}
-		if (toCheck.end > 1020) {// if we reach 17:00 (1020 minutes), advance to the next day
-			break;
-		}
 	}
 	if (isTimeIntervalFree(toCheck) && toCheck.end <= 1020) {
 		return toCheck;
@@ -116,21 +91,29 @@ TimeInterval Day::findFreeInterval(unsigned lengthInMinutes) {
 	return TimeInterval(0, 0);	//return an empty interval
 }
 
-void Day::printAppointments(std::ostream& out) const{
+void Day::printAppointments(std::ostream& out) const {
 	for (size_t i = 0; i < appointments.size(); ++i) {
 		appointments[i].print(out);
+	}
+}
+void Day::print(std::ostream& out) const {
+	if (appointments.size() > 0 || isHoliday) {
+		date.print(out);
+		if (isHoliday) out << "holiday ";
+		else out << "workday ";
+		out << appointments.size() <<  " appointments:\n";
+		printAppointments(out);
 	}
 }
 void Day::logAppointments() const {
 	if (isHoliday) cout << "This day is a holiday.\n";
 	if (appointments.size() == 0) cout << "No appointments for this day.\n";
 	printAppointments(cout);
-	
 }
 void Day::setAsHoliday() {
 	isHoliday = true;
 }
-Date Day::getDate() {
+Date Day::getDate() const {
 	return date;
 }
 size_t Day::getAppointmentCount() {

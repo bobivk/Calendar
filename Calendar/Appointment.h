@@ -1,6 +1,7 @@
 #pragma once
 #include"TimeInterval.h"
 #include<string>
+
 using namespace std;
 
 class Appointment
@@ -15,6 +16,7 @@ public:
 	Appointment() = default;
 	Appointment(const string name, const string comment, TimeInterval t);
 	Appointment(const Appointment& other);
+	~Appointment();
 	Appointment& operator=(const Appointment& other);
 	void swap(Appointment&, Appointment&);
 	unsigned getStart() const;

@@ -7,17 +7,21 @@
 
 class Calendar
 {
-	vector<Day> days;
+	std::vector<Day> days;
 
 public:
-	Calendar(std::string filename);
-	Day* searchDay(Date date);
+	Calendar();
+	~Calendar();
 	void book();
+	void addAppointment(Appointment*, Date);
 	void unbook();
 	void find();
 	void findSlot();
+	std::vector<Day>::iterator searchDay(Date date);
 	void load(std::string fileName);
 	void save(std::string fileName);
 	void busyDays();
+	void list();
+	void mergeWith(std::string fileName);
 };
 
