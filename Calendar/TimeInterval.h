@@ -23,5 +23,5 @@ struct TimeInterval
 	TimeInterval& operator=(const TimeInterval&);
 	bool operator==(const TimeInterval&) const;
 	void swap(TimeInterval& other);
-	void print() const;
+	void print(std::ostream& out) const;
 };

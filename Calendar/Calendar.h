@@ -10,14 +10,14 @@ class Calendar
 	vector<Day> days;
 
 public:
-	Calendar();
+	Calendar(std::string filename);
 	Day* searchDay(Date date);
 	void book();
 	void unbook();
 	void find();
 	void findSlot();
-	void load(string fileName);
-	void save(string fileName);
+	void load(std::string fileName);
+	void save(std::string fileName);
 	void busyDays();
 };
 

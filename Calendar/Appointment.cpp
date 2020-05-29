@@ -48,7 +48,7 @@ TimeInterval Appointment::getTimeInterval() const {
 	return timeInterval;
 }
 
-void Appointment::print() const {
-	timeInterval.print();
-	std::cout <<" : " << name << ", Comment: " << comment << endl;
+void Appointment::print(ostream& out) const {
+	timeInterval.print(out);
+	out <<" : " << name << ", Comment: " << comment << endl;
 }

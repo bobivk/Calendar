@@ -7,6 +7,7 @@
 Day::Day(unsigned day, unsigned month, unsigned year) :
 	date(day, month, year) 
 {}
+Day::Day(Date date_) : date{ date_ } {}
 
 bool Day::isTimeIntervalFree(TimeInterval t) const{
 	for (size_t i = 0; i < appointments.size(); ++i) {
@@ -75,7 +76,7 @@ void Day::removeAppointment(TimeInterval time) {
 		if (appointments[i].getTimeInterval() == time) {
 			appointments.erase(appointments.begin() + i);
 			cout << "Removed appointment in interval ";
-			time.print();
+			time.print(cout);
 			cout << endl;
 			return;
 		}
@@ -86,8 +87,8 @@ void Day::findAndPrintAppointment(string nameOrComment) {
 	for (size_t i = 0; i < appointments.size(); ++i) {
 		if (appointments[i].getName() == nameOrComment
 			|| appointments[i].getComment() == nameOrComment) {
-			date.print();
-			appointments[i].print();
+			date.print(cout);
+			appointments[i].print(cout);
 		}
 	}
 }
@@ -115,12 +116,16 @@ TimeInterval Day::findFreeInterval(unsigned lengthInMinutes) {
 	return TimeInterval(0, 0);	//return an empty interval
 }
 
-void Day::printAppointments() const{
+void Day::printAppointments(std::ostream& out) const{
+	for (size_t i = 0; i < appointments.size(); ++i) {
+		appointments[i].print(out);
+	}
+}
+void Day::logAppointments() const {
 	if (isHoliday) cout << "This day is a holiday.\n";
 	if (appointments.size() == 0) cout << "No appointments for this day.\n";
-	for (size_t i = 0; i < appointments.size(); ++i) {
-		appointments[i].print();
-	}
+	printAppointments(cout);
+	
 }
 void Day::setAsHoliday() {
 	isHoliday = true;

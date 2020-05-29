@@ -8,6 +8,10 @@ Date::Date(unsigned in_day, unsigned in_month, unsigned in_year) :
 	assert(in_day <= 31);
 	assert(in_month <= 12);
 }
+Date::Date(const Date& other):
+	day{ other.day },
+	month{ other.month },
+	year{ other.year } {}
 
 bool Date::operator==(Date& other) const{
 	if (day == other.day && month == other.month && year == other.year) return true;
@@ -68,6 +72,6 @@ void Date::operator--() {
 	
 	
 }
-void Date::print() const {
-	std::cout << day << '.' << month << '.' << year << ' ';
+void Date::print(std::ostream& out) const {
+	out << day << '.' << month << '.' << year << ' ';
 }

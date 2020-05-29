@@ -22,7 +22,7 @@ public:
 	string getName() const;
 	string getComment() const;
 	unsigned getLengthInMinutes() const;
-	void print() const;
+	void print(ostream& out) const;
 	TimeInterval getTimeInterval() const;
 };
 

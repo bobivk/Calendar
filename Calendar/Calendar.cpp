@@ -1,6 +1,7 @@
 #include "Calendar.h"
 
-Calendar::Calendar() {
+Calendar::Calendar(std::string filename) {
+	/*
 	for (unsigned year = 1900; year <= 2222; ++year) {
 		bool peakYear = false;
 		if (year % 4 == 0) peakYear = true;
@@ -16,6 +17,8 @@ Calendar::Calendar() {
 			}
 		}
 	}
+	*/
+	load(filename);
 }
 
 void Calendar::book() {
@@ -28,9 +31,14 @@ void Calendar::book() {
 	Day* chosenDay = searchDay(date);
 	if (chosenDay != nullptr) {
 		chosenDay->addAppointment(appointment);
-		cout << "Booked appointment ";
-		appointment.print();
 	}
+	else {
+		Day newDay(date);
+		newDay.addAppointment(appointment);
+		days.push_back(newDay);
+	}
+	cout << "Booked appointment ";
+	appointment.print(cout);
 }
 
 void Calendar::unbook() {
@@ -71,8 +79,8 @@ void Calendar::findSlot() {
 	}
 	--fromDate;
 	cout << "Free interval found on ";
-	fromDate.print();
-	freeIntervalFound.print();
+	fromDate.print(cout);
+	freeIntervalFound.print(cout);
 	cout << endl;
 }
 
@@ -94,9 +102,9 @@ void Calendar::busyDays() {
 	}
 	sortDaysByBusiness(days);
 	for (size_t i = 0; i < days.size(); ++i) {
-		days[i]->getDate().print();
+		days[i]->getDate().print(cout);
 		cout << endl;
-		days[i]->printAppointments();
+		days[i]->logAppointments();
 	}
 }
 
@@ -106,10 +114,6 @@ void Calendar::load(string fileName) {
 	in.close();
 }
 void Calendar::save(string fileName) {
-	ofstream out(fileName, ios::binary);
-	if (out.is_open()) {
-		out.write((char*)this, sizeof(Calendar));
-		out.close();
-	}
-	else cout << "No file specified.";
+	
+	cout << "No file specified.";
 }

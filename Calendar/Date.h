@@ -8,9 +8,10 @@ struct Date
 
 	Date() = default;
 	Date(unsigned day, unsigned month, unsigned year);
+	Date(const Date& other);
 	bool operator==(Date& other) const;
 	void operator++();
 	void operator--();
-	void print() const;
+	void print(std::ostream& out) const;
 };
 

@@ -38,18 +38,18 @@ void TimeInterval::swap(TimeInterval& other) {
 	std::swap(end, other.end);
 }
 
-void TimeInterval::print() const {
+void TimeInterval::print(std::ostream& out) const {
 	Pair<unsigned, unsigned> startTime = this->minutesToHours(start);
 	Pair<unsigned, unsigned> endTime = this->minutesToHours(end);
 	if (startTime.second == 0) {
-		std::cout << startTime.first << ":" << startTime.second << "0 - " <<
+		out << startTime.first << ":" << startTime.second << "0 - " <<
 			endTime.first << ":" << endTime.second;
 	}		
 	else {
-		std::cout << startTime.first << ":" << startTime.second << " - " <<
+		out << startTime.first << ":" << startTime.second << " - " <<
 			endTime.first << ":" << endTime.second;
 	}
 	if (endTime.second == 0) {
-		std::cout << '0';
+		out << '0';
 	}
 }
