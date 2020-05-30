@@ -4,6 +4,9 @@
 Date Parser::parseDate(istream& input) {
 	string dateStr;
 	input >> dateStr;	//12.04.2020  
+	return parseDate(dateStr);
+}
+Date Parser::parseDate(const string& dateStr) {
 	unsigned day = 0;
 	day += (dateStr[0] - '0') * 10;
 	day += (dateStr[1] - '0');
@@ -16,13 +19,15 @@ Date Parser::parseDate(istream& input) {
 	year += (dateStr[8] - '0') * 10;
 	year += (dateStr[9] - '0');
 
-
 	return Date(day, month, year);
 }
 
 TimeInterval Parser::parseTimeInterval(istream& input) {
 	string startTimeStr, endTimeStr;
 	input >> startTimeStr >> endTimeStr;	//12:15, 16:15
+	return parseTimeInterval(startTimeStr, endTimeStr);
+}
+TimeInterval Parser::parseTimeInterval(const string& startTimeStr, const string& endTimeStr) {
 	unsigned startMinutes = 0;
 	startMinutes += (startTimeStr[0] - '0') * 600;
 	startMinutes += (startTimeStr[1] - '0') * 60;
@@ -33,8 +38,8 @@ TimeInterval Parser::parseTimeInterval(istream& input) {
 	endMinutes += (endTimeStr[1] - '0') * 60;
 	endMinutes += (endTimeStr[3] - '0') * 10;
 	endMinutes += (endTimeStr[4] - '0');
-	TimeInterval t(startMinutes, endMinutes);
-	return t;
+
+	return TimeInterval(startMinutes, endMinutes);
 }
 unsigned Parser::parseTime(istream& input) {
 	string timeStr;

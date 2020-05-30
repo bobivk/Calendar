@@ -51,5 +51,5 @@ TimeInterval Appointment::getTimeInterval() const {
 
 void Appointment::print(ostream& out) const {
 	timeInterval.print(out);
-	out <<" : " << name << " Comment: " << comment << endl;
+	out <<": " << name << " Comment: " << comment << endl;
 }

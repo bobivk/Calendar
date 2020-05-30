@@ -32,15 +32,15 @@ void Calendar::book() {
 	cin >> name >> comment;
 	Date date = Parser::parseDate(cin);
 	TimeInterval time = Parser::parseTimeInterval(cin);
-	Appointment* newAppointment = new Appointment(name, comment, time);
+	Appointment newAppointment(name, comment, time);
 	addAppointment(newAppointment, date);
 }
-void Calendar::addAppointment(Appointment* newAppointment, Date date) {
+void Calendar::addAppointment(Appointment newAppointment, Date date) {
 	vector<Day>::iterator foundDay = searchDay(date);
 	foundDay->addAppointment(newAppointment);
 	cout << "Booked appointment ";
 	date.print(cout);
-	newAppointment->print(cout);
+	newAppointment.print(cout);
 }
 
 void Calendar::unbook() {
@@ -109,10 +109,33 @@ void Calendar::busyDays() {
 	}
 }
 
+vector<string> splitString(string input, char delim) {
+	stringstream ss(input);
+	string current;
+	vector<string> result;
+	while (getline(ss, current, delim)) {
+		result.push_back(current);
+	}
+	return result;
+}
+
 void Calendar::load(string fileName) {
 	ifstream in(fileName, ios::beg);
-
-
+	string line;
+	while (getline(in, line)) {
+		vector<string> dayInfo = splitString(line, ' ');
+		Date date = Parser::parseDate(dayInfo[0]);
+		if (dayInfo[1] == "holiday,") searchDay(date)->setAsHoliday();
+		int appointmentCount = stoi(dayInfo[2]);
+		for (int i = 0; i < appointmentCount; ++i) {
+			string appointmentstr;
+			getline(in, appointmentstr);
+			vector<string> appointmentInfo = splitString(appointmentstr, ' ');
+			TimeInterval time = Parser::parseTimeInterval(appointmentInfo[0], appointmentInfo[2]);
+			Appointment appointment(appointmentInfo[4], appointmentInfo[6], time);
+			addAppointment(appointment, date);
+		}
+	}
 }
 void Calendar::save(string fileName) {
 	ofstream out(fileName, ios::trunc);

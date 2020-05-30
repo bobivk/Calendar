@@ -16,7 +16,7 @@ public:
 	~Day();
 	bool isTimeIntervalFree(TimeInterval t) const;
 	unsigned getBusyMinutes() const;
-	void addAppointment(Appointment*);
+	void addAppointment(Appointment);
 	void removeAppointment(TimeInterval t);
 	void findAndPrintAppointment(string nameOrComment);
 	TimeInterval findFreeInterval(unsigned LengthInMinutes);

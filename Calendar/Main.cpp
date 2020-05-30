@@ -21,7 +21,17 @@ void help() {
 	cout << "help\n";
 	cout << "exit\n\n";
 	cout << "Please enter dates in the format <DD.MM.YYYY> and time in the format <HH:MM>.\n";
+	cout << "Please enter names and comments without whitespaces.\n";
 	cout << endl << endl;
+}
+
+void testAddAppointments(Calendar& calendar) {
+	Appointment appointment("appointment1", "comment1", TimeInterval(480, 540));
+	Date date(10, 4, 2020);
+	calendar.addAppointment(appointment, date);
+	Appointment appointment2("appointment2", "comment2", TimeInterval(550, 660));
+	Date date2(10, 4, 2020);
+	calendar.addAppointment(appointment2, date2);
 }
 
 int main() {
@@ -29,16 +39,8 @@ int main() {
 	Calendar calendar;
 	bool running = true;
 	string fileName = "calendar.txt";
-	calendar.load(fileName);
 
-	
-	Appointment* appointment = new Appointment("appointment1", "comment1", TimeInterval(480, 540));
-	Date date(10, 4, 2020);
-	calendar.addAppointment(appointment, date);
-	Appointment* appointment2 = new Appointment("appointment2", "comment2", TimeInterval(550, 660));
-	Date date2(10, 4, 2020);
-	calendar.addAppointment(appointment2, date2);
-
+	//testAddAppointments(calendar);
 	while (running) {
 		cout << "$ ";
 		string command;

@@ -36,12 +36,12 @@ bool compareAppointments(Appointment a, Appointment b){
 void Day::sortAppointments() {
 	std::sort(appointments.begin(), appointments.end(), compareAppointments);
 }
-void Day::addAppointment(Appointment* appointment) { 
-	if (!isTimeIntervalFree(appointment->getTimeInterval())) //iskame li da moje da se pripokrivat?
+void Day::addAppointment(Appointment appointment) { 
+	if (!isTimeIntervalFree(appointment.getTimeInterval())) //iskame li da moje da se pripokrivat?
 	{
 		cout << "This time interval is already taken.\n";
 	}
-	appointments.push_back(*appointment);
+	appointments.push_back(appointment);
 	sortAppointments();
 }
 
@@ -99,8 +99,8 @@ void Day::printAppointments(std::ostream& out) const {
 void Day::print(std::ostream& out) const {
 	if (appointments.size() > 0 || isHoliday) {
 		date.print(out);
-		if (isHoliday) out << "holiday ";
-		else out << "workday ";
+		if (isHoliday) out << "holiday, ";
+		else out << "workday, ";
 		out << appointments.size() <<  " appointments:\n";
 		printAppointments(out);
 	}

@@ -4,6 +4,7 @@
 #include<vector>
 #include<algorithm>
 #include<fstream>
+#include<sstream>
 
 class Calendar
 {
@@ -13,7 +14,7 @@ public:
 	Calendar();
 	~Calendar();
 	void book();
-	void addAppointment(Appointment*, Date);
+	void addAppointment(Appointment, Date);
 	void unbook();
 	void find();
 	void findSlot();
