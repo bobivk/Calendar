@@ -26,4 +26,5 @@ public:
 	void setAsHoliday();
 	Date getDate() const;
 	size_t getAppointmentCount();
+	bool appointmentExists(Appointment) const;
 };

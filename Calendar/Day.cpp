@@ -119,3 +119,12 @@ Date Day::getDate() const {
 size_t Day::getAppointmentCount() {
 	return appointments.size();
 }
+bool Day::appointmentExists(Appointment appointment) const {
+	for (size_t i = 0; i < appointments.size(); ++i) {
+		if (appointments[i] == appointment) {
+			cout << "This appointment already exists.\n";
+			return true;
+		}
+	}
+	return false;
+}

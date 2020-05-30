@@ -15,9 +15,10 @@ private:
 public:
 	Appointment() = default;
 	Appointment(const string name, const string comment, TimeInterval t);
-	Appointment(const Appointment& other);
+	Appointment(const Appointment&);
 	~Appointment();
-	Appointment& operator=(const Appointment& other);
+	Appointment& operator=(const Appointment&);
+	bool operator==(const Appointment&) const;
 	void swap(Appointment&, Appointment&);
 	unsigned getStart() const;
 	unsigned getEnd() const;

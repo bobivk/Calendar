@@ -24,25 +24,31 @@ void help() {
 	cout << "Please enter names and comments without whitespaces.\n";
 	cout << endl << endl;
 }
+void findSlotWith(Calendar& first, string secondFileName, Date fromDate, unsigned minutes) {
+	//create a temporary calendar and merge it with the second calendar, 
+	//then call findslot() on the merged calendar
+	Calendar merged{ first };
+	merged.load(secondFileName, false);
+	merged.findSlot(fromDate, minutes);
+
+}
 
 void testAddAppointments(Calendar& calendar) {
 	Appointment appointment("appointment1", "comment1", TimeInterval(480, 540));
 	Date date(10, 4, 2020);
 	calendar.addAppointment(appointment, date);
 	Appointment appointment2("appointment2", "comment2", TimeInterval(550, 660));
-	Date date2(10, 4, 2020);
+	Date date2(11, 4, 2020);
 	calendar.addAppointment(appointment2, date2);
+	Appointment appointment3("appointment3", "comment3", TimeInterval(670, 850));
+	Date date3(11, 4, 2020);
+	calendar.addAppointment(appointment3, date3);
 }
-
-int main() {
-	help();
-	Calendar calendar;
-	bool running = true;
+void runProgram(Calendar& calendar) {
 	string fileName = "calendar.txt";
-
-	//testAddAppointments(calendar);
+	bool running = true;
 	while (running) {
-		cout << "$ ";
+		cout << "\n $ ";
 		string command;
 		cin >> command;
 		if (command == "book") {
@@ -65,10 +71,16 @@ int main() {
 			calendar.find();
 		}
 		else if (command == "findslot") {
-			calendar.findSlot();
+			Date date = Parser::parseDate(cin);
+			unsigned minutes = Parser::parseTime(cin);
+			calendar.findSlot(date, minutes);
 		}
 		else if (command == "findslotwith") {
-			
+			Date date = Parser::parseDate(cin);
+			unsigned minutes = Parser::parseTime(cin);
+			string otherFileName;
+			cin >> otherFileName;
+			findSlotWith(calendar, otherFileName, date, minutes);
 		}
 		else if (command == "busydays") {
 			calendar.busyDays();
@@ -92,7 +104,7 @@ int main() {
 		}
 		else if (command == "open") {
 			cin >> fileName;
-			calendar.load(fileName);
+			calendar.load(fileName, false);
 			cout << "Loaded data from " << fileName << endl;
 		}
 		else if (command == "help") help();
@@ -102,6 +114,17 @@ int main() {
 		}
 		else cout << "Invalid command.\n";
 	}
+}
+
+int main() {
+	help();
+	Calendar calendar;
+	//testAddAppointments(calendar);
+	
+	
+	runProgram(calendar);
+
+
 	return 0;
 }
 

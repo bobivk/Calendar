@@ -12,14 +12,15 @@ class Calendar
 
 public:
 	Calendar();
+	Calendar(const Calendar&);
 	~Calendar();
 	void book();
 	void addAppointment(Appointment, Date);
 	void unbook();
 	void find();
-	void findSlot();
+	void findSlot(Date fromDate, unsigned minutesOfSearched);
 	std::vector<Day>::iterator searchDay(Date date);
-	void load(std::string fileName);
+	void load(std::string fileName, bool merging);
 	void save(std::string fileName);
 	void busyDays();
 	void list();

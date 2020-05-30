@@ -14,8 +14,10 @@ Date::Date(const Date& other):
 	year{ other.year } {}
 
 bool Date::operator==(const Date& other) const{
-	if (day == other.day && month == other.month && year == other.year) return true;
-	return false;
+	return day == other.day && month == other.month && year == other.year;
+}
+bool Date::operator<(const Date& other) const {
+	return year <= other.year && month <= other.month && day < other.day;
 }
 
 void Date::operator++() {

@@ -21,6 +21,9 @@ Appointment& Appointment::operator=(const Appointment& other) {
 	swap(temp);
 	return *this;
 }
+bool Appointment::operator==(const Appointment& other) const{
+	return name == other.name && comment == other.comment && timeInterval == other.timeInterval;
+}
 void Appointment::swap(Appointment& other) {
 	std::swap(name, other.name);
 	std::swap(comment, other.comment);

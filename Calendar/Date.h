@@ -11,6 +11,7 @@ struct Date
 	Date(unsigned day, unsigned month, unsigned year);
 	Date(const Date& other);
 	bool operator==(const Date& other) const;
+	bool operator<(const Date& other) const;
 	void operator++();
 	void operator--();
 	void print(std::ostream& out) const;
